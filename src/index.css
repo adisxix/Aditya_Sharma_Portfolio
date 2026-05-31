@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@400..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-mono: 'Space Mono', monospace;
+  --font-sans: 'Syne', sans-serif;
+
+  --color-brand-cyan: #00F5FF;
+  --color-brand-violet: #A855F7;
+  --color-brand-dark: #0A0A0F;
+  --color-brand-navy: #0F172A;
+  --color-brand-green: #052E16;
+  --color-brand-neon: #171717;
+  --color-brand-amber: #1C1917;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+  }
+
+  :root {
+    /* Base theme: strict black & white */
+    --bg-color: #000000;
+    --accent-color: #ffffff;
+    --text-color: #F3F4F6; /* near-white */
+    --text-muted: #9CA3AF; /* gray for muted text */
+  }
+
+  /* World Classes */
+  body.world-hero {
+    --bg-color: #000000;
+    --accent-color: #ffffff;
+  }
+  
+  body.world-about {
+    --bg-color: #000000;
+    --accent-color: #ffffff;
+  }
+  
+  body.world-skills {
+    --bg-color: #000000;
+    --accent-color: #ffffff;
+  }
+  
+  body.world-projects {
+    --bg-color: #000000;
+    --accent-color: #ffffff;
+  }
+
+  body.world-certifications {
+    --bg-color: #000000;
+    --accent-color: #ffffff;
+  }
+  
+  body.world-contact {
+    --bg-color: #000000;
+    --accent-color: #ffffff;
+  }
+
+  body {
+    @apply bg-[var(--bg-color)] text-[var(--text-color)] font-sans transition-colors duration-1000 ease-in-out cursor-none antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-mono;
+  }
+}
+
+@layer utilities {
+  .text-stroke-cyan {
+    -webkit-text-stroke: 2px var(--color-brand-cyan);
+    color: transparent;
+  }
+
+  .text-stroke-accent {
+    -webkit-text-stroke: 1px var(--accent-color);
+    color: transparent;
+  }
+
+    /* White glow for name hover */
+    .name-glow {
+      transition: color .12s ease, text-shadow .18s ease;
+    }
+    .name-glow:hover {
+      color: #ffffff !important;
+      text-shadow: 0 0 8px rgba(255,255,255,0.95), 0 0 20px rgba(255,255,255,0.6);
+    }
+
+    /* Centered subtle white radial glow for hero name */
+    .hero-name-center {
+      position: relative;
+      z-index: 10;
+    }
+    .hero-name-center::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%;
+      height: 60%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.18) 30%, transparent 65%);
+      filter: blur(36px);
+      pointer-events: none;
+      z-index: 5; /* sit above background but below text (parent has z-index:10) */
+      opacity: 0.95;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 4px;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  /* sharp pointer-style cursor with subtle bevel and rotation */
+  width: 18px;
+  height: 24px;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  /* center the element on the pointer and rotate so the right point faces up */
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transition: left 0.04s linear, top 0.04s linear, transform .06s ease, box-shadow .08s ease;
+  will-change: left, top, transform;
+  background: linear-gradient(135deg, #ffffff 0%, #e6e6e6 60%); /* subtle bevel */
+  border: 1px solid rgba(0,0,0,0.7);
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%, 25% 50%); /* angled pointer */
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45));
+}
+
+/* remove extra pseudo-elements; keep cursor shape sharp and minimal */
+.custom-cursor::before,
+.custom-cursor::after {
+  content: none;
+}
+
+/* larger / highlighted state when hovering interactive elements */
+.custom-cursor.cursor-active {
+  transform: translate(-50%, -50%) rotate(-90deg) scale(1.18);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+  background: linear-gradient(135deg, #ffffff 0%, #f7f7f7 60%);
+}
+
+/* When this class is added to body, force-hide the native cursor everywhere */
+.hide-native-cursor,
+.hide-native-cursor * {
+  cursor: none !important;
+}
+
+/* Force-hide native OS cursor globally (except form inputs) to avoid flashing default cursor */
+html, body, body * {
+  cursor: none !important;
+}
+
+/* Exceptions: allow text cursor in inputs and contenteditable areas */
+input, textarea, select, [contenteditable] {
+  cursor: text !important;
+}
+
+@keyframes tech-spin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Background Grids & Textures */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0.2) 50%,
+    rgba(0,0,0,0.2)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+@keyframes slideDown {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.animate-slide-down {
+  animation: slideDown 2s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+  from { background-position: 200% center; }
+  to { background-position: -200% center; }
+}
+
+.animate-shimmer {
+  animation: shimmer 8s linear infinite;
+}
+
+@keyframes matrix-fall {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+.matrix-char {
+  animation: matrix-fall linear infinite;
+}
+
+/* Neon social button */
+.neon {
+  transition: transform .15s ease, box-shadow .15s ease, color .15s ease;
+}
+.neon:hover {
+  transform: translateY(-4px) scale(1.02);
+  color: var(--accent-color) !important;
+  box-shadow: 0 0 10px var(--accent-color), 0 0 28px rgba(0,0,0,0.25) inset;
+}
+.neon svg {
+  transition: transform .15s ease, filter .15s ease;
+  filter: drop-shadow(0 0 6px rgba(0,0,0,0.15));
+}
+.neon:hover svg {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 14px var(--accent-color));
+}
+
+.social-label {
+  font-size: 10px;
+  letter-spacing: .16em;
+  color: var(--text-muted);
+}
+
+/* Skill card styles: white border glow on hover, icon scale
+   Applied to tech boxes in Skills.jsx via class `skill-card` */
+.skill-card {
+  @apply bg-white/5 border border-white rounded-md transition-all;
+}
+.skill-card img {
+  transition: transform .12s ease;
+}
+.skill-card:hover img {
+  transform: none !important; /* keep icon size stable on hover */
+}
+
+/* Horizontal marquee utility (used by Projects/ Education strips) */
+.edu-marquee {
+  overflow: hidden;
+}
+.edu-track {
+  display: flex;
+  gap: 2rem; /* maintain visible gap between education cards */
+  width: max-content;
+  align-items: stretch;
+  animation: edu-scroll 24s linear infinite; /* continuous scroll */
+}
+.edu-track.pause-on-hover:hover {
+  animation-play-state: paused;
+}
+
+@keyframes edu-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
